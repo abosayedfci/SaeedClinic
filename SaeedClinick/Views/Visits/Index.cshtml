@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SaeedClinick.Data.Visit>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Visits For Patient  : @ViewBag.Patient.Name</h2>
+
+<p>
+    @Html.ActionLink("Add New Visit", "Create", new { PatientId = ViewBag.Patient.Id, @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+           <p>Visit Number</p>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            <p>Next Visit Date</p>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Complain)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Others)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisitNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NextVisitDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Complain)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Others)
+        </td>
+      
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id } , new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-primary" })
+        </td>
+    </tr>
+}
+
+</table>

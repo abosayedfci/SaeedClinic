@@ -1,0 +1,115 @@
+﻿@model IEnumerable<SaeedClinick.Data.PatientData>
+
+@{
+    ViewBag.Title = "Patients";
+}
+
+<h2>Patients</h2>
+
+<p>
+    @Html.ActionLink("Add New Patient", "Create")
+</p>
+<p>
+    @using (Html.BeginForm())
+    {
+    <p>
+        Patient Name: @Html.TextBox("searchstring")
+        <input type="submit" value="Filter" />
+    </p>
+    }
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            <p> File Number</p>
+        </th>
+        <th>
+            <p>Mobile</p>
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Marrid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LMB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EDD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GPA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Others)
+        </th>
+        <th>
+            <p>Medical History</p>
+        </th>
+        <th>
+           <p>Surgical History</p>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelephoneNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Marrid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LMB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EDD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GPA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Others)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicalHistory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SurgicalHistory)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Visits", "Index", "Visits", new { PatientID= item.Id } ,null) |
+            @Html.ActionLink("Add New Visit", "Create","Visits", new { PatientID = item.Id },null)
+        </td>
+    </tr>
+}
+
+</table>

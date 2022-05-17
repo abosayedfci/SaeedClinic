@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="clinickModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LK_Labs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabTitle" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="LK_Treatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TreatmentTitle" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="LK_US">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsTitle" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PatientData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="FileNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TelephoneNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Marrid" Type="nvarchar" MaxLength="50" />
+          <Property Name="RH" Type="nvarchar" MaxLength="50" />
+          <Property Name="LMB" Type="nvarchar" MaxLength="50" />
+          <Property Name="EDD" Type="nvarchar" MaxLength="50" />
+          <Property Name="GPA" Type="nvarchar" MaxLength="50" />
+          <Property Name="Others" Type="nvarchar" MaxLength="100" />
+          <Property Name="MedicalHistory" Type="nvarchar" MaxLength="200" />
+          <Property Name="SurgicalHistory" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VisitNum" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="NextVisitDate" Type="datetime" />
+          <Property Name="BP" Type="nvarchar" MaxLength="100" />
+          <Property Name="LL" Type="nvarchar" MaxLength="100" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="Complain" Type="nvarchar" MaxLength="200" />
+          <Property Name="Others" Type="nvarchar" MaxLength="200" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitLab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabId" Type="int" Nullable="false" />
+          <Property Name="VisitId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TreatmentId" Type="int" Nullable="false" />
+          <Property Name="VisitId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitUS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USId" Type="int" Nullable="false" />
+          <Property Name="VisitId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Visit_PatientData">
+          <End Role="PatientData" Type="Self.PatientData" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitLab_LK_Labs">
+          <End Role="LK_Labs" Type="Self.LK_Labs" Multiplicity="1" />
+          <End Role="VisitLab" Type="Self.VisitLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_Labs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitLab">
+              <PropertyRef Name="LabId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitLab_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitLab" Type="Self.VisitLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitLab">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitTreatment_LK_Treatment">
+          <End Role="LK_Treatment" Type="Self.LK_Treatment" Multiplicity="1" />
+          <End Role="VisitTreatment" Type="Self.VisitTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_Treatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitTreatment">
+              <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitTreatment_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitTreatment" Type="Self.VisitTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitTreatment">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitUS_LK_US">
+          <End Role="LK_US" Type="Self.LK_US" Multiplicity="1" />
+          <End Role="VisitUS" Type="Self.VisitUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_US">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitUS">
+              <PropertyRef Name="USId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitUS_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitUS" Type="Self.VisitUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitUS">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="clinickModelStoreContainer">
+          <EntitySet Name="LK_Labs" EntityType="Self.LK_Labs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LK_Treatment" EntityType="Self.LK_Treatment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LK_US" EntityType="Self.LK_US" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientData" EntityType="Self.PatientData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitLab" EntityType="Self.VisitLab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitTreatment" EntityType="Self.VisitTreatment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitUS" EntityType="Self.VisitUS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Visit_PatientData" Association="Self.FK_Visit_PatientData">
+            <End Role="PatientData" EntitySet="PatientData" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitLab_LK_Labs" Association="Self.FK_VisitLab_LK_Labs">
+            <End Role="LK_Labs" EntitySet="LK_Labs" />
+            <End Role="VisitLab" EntitySet="VisitLab" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitLab_Visit" Association="Self.FK_VisitLab_Visit">
+            <End Role="Visit" EntitySet="Visit" />
+            <End Role="VisitLab" EntitySet="VisitLab" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitTreatment_LK_Treatment" Association="Self.FK_VisitTreatment_LK_Treatment">
+            <End Role="LK_Treatment" EntitySet="LK_Treatment" />
+            <End Role="VisitTreatment" EntitySet="VisitTreatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitTreatment_Visit" Association="Self.FK_VisitTreatment_Visit">
+            <End Role="Visit" EntitySet="Visit" />
+            <End Role="VisitTreatment" EntitySet="VisitTreatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitUS_LK_US" Association="Self.FK_VisitUS_LK_US">
+            <End Role="LK_US" EntitySet="LK_US" />
+            <End Role="VisitUS" EntitySet="VisitUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitUS_Visit" Association="Self.FK_VisitUS_Visit">
+            <End Role="Visit" EntitySet="Visit" />
+            <End Role="VisitUS" EntitySet="VisitUS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="clinickModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LK_Labs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VisitLabs" Relationship="Self.FK_VisitLab_LK_Labs" FromRole="LK_Labs" ToRole="VisitLab" />
+        </EntityType>
+        <EntityType Name="LK_Treatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TreatmentTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VisitTreatments" Relationship="Self.FK_VisitTreatment_LK_Treatment" FromRole="LK_Treatment" ToRole="VisitTreatment" />
+        </EntityType>
+        <EntityType Name="LK_US">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VisitUS" Relationship="Self.FK_VisitUS_LK_US" FromRole="LK_US" ToRole="VisitUS" />
+        </EntityType>
+        <EntityType Name="PatientData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="FileNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TelephoneNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Marrid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LMB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GPA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Others" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MedicalHistory" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SurgicalHistory" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Visits" Relationship="Self.FK_Visit_PatientData" FromRole="PatientData" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VisitNum" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NextVisitDate" Type="DateTime" Precision="3" />
+          <Property Name="BP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="Complain" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Others" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PatientData" Relationship="Self.FK_Visit_PatientData" FromRole="Visit" ToRole="PatientData" />
+          <NavigationProperty Name="VisitLabs" Relationship="Self.FK_VisitLab_Visit" FromRole="Visit" ToRole="VisitLab" />
+          <NavigationProperty Name="VisitTreatments" Relationship="Self.FK_VisitTreatment_Visit" FromRole="Visit" ToRole="VisitTreatment" />
+          <NavigationProperty Name="VisitUS" Relationship="Self.FK_VisitUS_Visit" FromRole="Visit" ToRole="VisitUS" />
+        </EntityType>
+        <EntityType Name="VisitLab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabId" Type="Int32" Nullable="false" />
+          <Property Name="VisitId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LK_Labs" Relationship="Self.FK_VisitLab_LK_Labs" FromRole="VisitLab" ToRole="LK_Labs" />
+          <NavigationProperty Name="Visit" Relationship="Self.FK_VisitLab_Visit" FromRole="VisitLab" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="VisitTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" />
+          <Property Name="VisitId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LK_Treatment" Relationship="Self.FK_VisitTreatment_LK_Treatment" FromRole="VisitTreatment" ToRole="LK_Treatment" />
+          <NavigationProperty Name="Visit" Relationship="Self.FK_VisitTreatment_Visit" FromRole="VisitTreatment" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="VisitU">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USId" Type="Int32" Nullable="false" />
+          <Property Name="VisitId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LK_US" Relationship="Self.FK_VisitUS_LK_US" FromRole="VisitUS" ToRole="LK_US" />
+          <NavigationProperty Name="Visit" Relationship="Self.FK_VisitUS_Visit" FromRole="VisitUS" ToRole="Visit" />
+        </EntityType>
+        <Association Name="FK_VisitLab_LK_Labs">
+          <End Role="LK_Labs" Type="Self.LK_Labs" Multiplicity="1" />
+          <End Role="VisitLab" Type="Self.VisitLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_Labs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitLab">
+              <PropertyRef Name="LabId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitTreatment_LK_Treatment">
+          <End Role="LK_Treatment" Type="Self.LK_Treatment" Multiplicity="1" />
+          <End Role="VisitTreatment" Type="Self.VisitTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_Treatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitTreatment">
+              <PropertyRef Name="TreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitUS_LK_US">
+          <End Role="LK_US" Type="Self.LK_US" Multiplicity="1" />
+          <End Role="VisitUS" Type="Self.VisitU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LK_US">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitUS">
+              <PropertyRef Name="USId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_PatientData">
+          <End Role="PatientData" Type="Self.PatientData" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitLab_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitLab" Type="Self.VisitLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitLab">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitTreatment_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitTreatment" Type="Self.VisitTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitTreatment">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitUS_Visit">
+          <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+          <End Role="VisitUS" Type="Self.VisitU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitUS">
+              <PropertyRef Name="VisitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="clinickEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LK_Labs" EntityType="Self.LK_Labs" />
+          <EntitySet Name="LK_Treatment" EntityType="Self.LK_Treatment" />
+          <EntitySet Name="LK_US" EntityType="Self.LK_US" />
+          <EntitySet Name="PatientDatas" EntityType="Self.PatientData" />
+          <EntitySet Name="Visits" EntityType="Self.Visit" />
+          <EntitySet Name="VisitLabs" EntityType="Self.VisitLab" />
+          <EntitySet Name="VisitTreatments" EntityType="Self.VisitTreatment" />
+          <EntitySet Name="VisitUS" EntityType="Self.VisitU" />
+          <AssociationSet Name="FK_VisitLab_LK_Labs" Association="Self.FK_VisitLab_LK_Labs">
+            <End Role="LK_Labs" EntitySet="LK_Labs" />
+            <End Role="VisitLab" EntitySet="VisitLabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitTreatment_LK_Treatment" Association="Self.FK_VisitTreatment_LK_Treatment">
+            <End Role="LK_Treatment" EntitySet="LK_Treatment" />
+            <End Role="VisitTreatment" EntitySet="VisitTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitUS_LK_US" Association="Self.FK_VisitUS_LK_US">
+            <End Role="LK_US" EntitySet="LK_US" />
+            <End Role="VisitUS" EntitySet="VisitUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_PatientData" Association="Self.FK_Visit_PatientData">
+            <End Role="PatientData" EntitySet="PatientDatas" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitLab_Visit" Association="Self.FK_VisitLab_Visit">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="VisitLab" EntitySet="VisitLabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitTreatment_Visit" Association="Self.FK_VisitTreatment_Visit">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="VisitTreatment" EntitySet="VisitTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitUS_Visit" Association="Self.FK_VisitUS_Visit">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="VisitUS" EntitySet="VisitUS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="clinickModelStoreContainer" CdmEntityContainer="clinickEntities1">
+          <EntitySetMapping Name="LK_Labs">
+            <EntityTypeMapping TypeName="clinickModel.LK_Labs">
+              <MappingFragment StoreEntitySet="LK_Labs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LabTitle" ColumnName="LabTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LK_Treatment">
+            <EntityTypeMapping TypeName="clinickModel.LK_Treatment">
+              <MappingFragment StoreEntitySet="LK_Treatment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TreatmentTitle" ColumnName="TreatmentTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LK_US">
+            <EntityTypeMapping TypeName="clinickModel.LK_US">
+              <MappingFragment StoreEntitySet="LK_US">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UsTitle" ColumnName="UsTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientDatas">
+            <EntityTypeMapping TypeName="clinickModel.PatientData">
+              <MappingFragment StoreEntitySet="PatientData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="FileNum" ColumnName="FileNum" />
+                <ScalarProperty Name="TelephoneNum" ColumnName="TelephoneNum" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Marrid" ColumnName="Marrid" />
+                <ScalarProperty Name="RH" ColumnName="RH" />
+                <ScalarProperty Name="LMB" ColumnName="LMB" />
+                <ScalarProperty Name="EDD" ColumnName="EDD" />
+                <ScalarProperty Name="GPA" ColumnName="GPA" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="MedicalHistory" ColumnName="MedicalHistory" />
+                <ScalarProperty Name="SurgicalHistory" ColumnName="SurgicalHistory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="clinickModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VisitNum" ColumnName="VisitNum" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="NextVisitDate" ColumnName="NextVisitDate" />
+                <ScalarProperty Name="BP" ColumnName="BP" />
+                <ScalarProperty Name="LL" ColumnName="LL" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Complain" ColumnName="Complain" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitLabs">
+            <EntityTypeMapping TypeName="clinickModel.VisitLab">
+              <MappingFragment StoreEntitySet="VisitLab">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LabId" ColumnName="LabId" />
+                <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitTreatments">
+            <EntityTypeMapping TypeName="clinickModel.VisitTreatment">
+              <MappingFragment StoreEntitySet="VisitTreatment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+                <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitUS">
+            <EntityTypeMapping TypeName="clinickModel.VisitU">
+              <MappingFragment StoreEntitySet="VisitUS">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="USId" ColumnName="USId" />
+                <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

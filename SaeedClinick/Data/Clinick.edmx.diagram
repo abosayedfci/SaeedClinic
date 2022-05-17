@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fdcb02c67afa43c8931bceb61ef7831b" Name="Diagram1">
+        <EntityTypeShape EntityType="clinickModel.LK_Labs" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.LK_Treatment" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.LK_US" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.PatientData" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.Visit" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.VisitLab" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.VisitTreatment" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinickModel.VisitU" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="clinickModel.FK_VisitLab_LK_Labs" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_VisitTreatment_LK_Treatment" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_VisitUS_LK_US" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_Visit_PatientData" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_VisitLab_Visit" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_VisitTreatment_Visit" ManuallyRouted="false" />
+        <AssociationConnector Association="clinickModel.FK_VisitUS_Visit" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
