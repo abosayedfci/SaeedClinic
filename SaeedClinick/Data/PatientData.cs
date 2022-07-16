@@ -11,7 +11,8 @@ namespace SaeedClinick.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class PatientData
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,19 +22,19 @@ namespace SaeedClinick.Data
         }
     
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public int Age { get; set; }
-        public string FileNum { get; set; }
         public string TelephoneNum { get; set; }
         public string Address { get; set; }
         public string Marrid { get; set; }
-        public string RH { get; set; }
+        [Required]
         public string LMB { get; set; }
+        [Required]
         public string EDD { get; set; }
-        public string GPA { get; set; }
         public string Others { get; set; }
-        public string MedicalHistory { get; set; }
-        public string SurgicalHistory { get; set; }
+       
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Visit> Visits { get; set; }

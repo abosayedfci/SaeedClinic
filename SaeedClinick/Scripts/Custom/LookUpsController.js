@@ -20,7 +20,7 @@
     var treatments = response.data.TreatmentList
     $scope.treatments = { "totalCount": response.data.TreatmentList.length, "data": response.data.TreatmentList, "success": true }.data;
 }, function errorCallback(response) {
-        alert("error");
+            alert(error.data);
     })
 
    
@@ -46,14 +46,14 @@
                 }
             },
                 function errorCallback(error) {
-                    alert("error");
+                    alert(error.data);
                 }
                 );
         }
         else if ($scope.NewTreatment != null && $scope.NewTreatment != "" && State == 2)
         {
 
-            $http.post('/Labs/NewTreatment/' + $scope.NewTreatment).then(successCallback, errorCallback);
+            $http.get('/Labs/NewTreatment?NewTreatmentTitle=' + $scope.NewTreatment).then(successCallback, errorCallback);
 
         function successCallback(response) {
             if (response.data != null) {
@@ -67,8 +67,8 @@
                 treeViewService.applyChanges($scope.treatments, $scope.NewTreatment, itemToPush);
             }
         }
-        function errorCallback(error) {
-            alert("error");
+            function errorCallback(error) {
+                alert(error.data);
         }
         }
         else if ($scope.NewUS != null && $scope.NewUS != "" && State == 3)
@@ -87,7 +87,7 @@
                 }
             }
             function errorCallback(error) {
-                alert("error");
+                alert(error.data);
             }
         }
        
@@ -103,7 +103,7 @@
         }).then(function (success) {
             alert("success")
         }, function (error) {
-            alert("error")
+                alert(error.data);
         });
     }
 

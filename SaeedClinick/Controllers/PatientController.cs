@@ -60,7 +60,7 @@ namespace SaeedClinick.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Age,FileNum,TelephoneNum,Address,Marrid,RH,LMB,EDD,GPA,Others,MedicalHistory,SurgicalHistory")] PatientData patientData)
+        public ActionResult Create([Bind(Include = "Id,Name,Age,TelephoneNum,Address,LMB,EDD,Others")] PatientData patientData)
         {
             if (ModelState.IsValid)
             {

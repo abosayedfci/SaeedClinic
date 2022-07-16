@@ -146,7 +146,11 @@ namespace SaeedClinick.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PatientID = new SelectList(db.PatientDatas, "Id", "Name", visit.PatientID);
+
+            ViewBag.Patient = visit.PatientID;
+            ViewBag.VisitNum = visit.Id;
+            ViewBag.Date = visit.Date;
+            //ViewBag.PatientID = new SelectList(db.PatientDatas, "Id", "Name", visit.PatientID);
             return View(visit);
         }
 

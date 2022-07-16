@@ -26,9 +26,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Age)
         </th>
-        <th>
-            <p> File Number</p>
-        </th>
+        
         <th>
             <p>Mobile</p>
             
@@ -36,30 +34,19 @@
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Marrid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RH)
-        </th>
+     
+     
         <th>
             @Html.DisplayNameFor(model => model.LMB)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EDD)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GPA)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.Others)
         </th>
-        <th>
-            <p>Medical History</p>
-        </th>
-        <th>
-           <p>Surgical History</p>
-        </th>
+     
         <th></th>
     </tr>
 
@@ -71,39 +58,26 @@
         <td>
             @Html.DisplayFor(modelItem => item.Age)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileNum)
-        </td>
+    
         <td>
             @Html.DisplayFor(modelItem => item.TelephoneNum)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Marrid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RH)
-        </td>
+      
+       
         <td>
             @Html.DisplayFor(modelItem => item.LMB)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EDD)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GPA)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.Others)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MedicalHistory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SurgicalHistory)
-        </td>
+   
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Visits", "Index", "Visits", new { PatientID= item.Id } ,null) |

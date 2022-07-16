@@ -26,9 +26,8 @@ namespace SaeedClinick.Controllers
 
         //    return Json(new { TreatmentList = TreatmentList }, JsonRequestBehavior.AllowGet);
         //}
-        [Route("NewTreatment/{NewTreatmentTitle}")]
-        [HttpPost]
-        public JsonResult AddTreatment(string NewTreatmentTitle)
+        [HttpGet]
+        public JsonResult NewTreatment(string NewTreatmentTitle)
         {
             if (NewTreatmentTitle != null && db.LK_Treatment.Where(ss => ss.TreatmentTitle == NewTreatmentTitle).Count() == 0)
             {
@@ -40,7 +39,7 @@ namespace SaeedClinick.Controllers
             }
             else
             {
-                return Json("error");
+                return Json("treatment is already exist", JsonRequestBehavior.AllowGet);
             }
         }
         //[Route("getUSList")]
@@ -66,7 +65,7 @@ namespace SaeedClinick.Controllers
             }
             else
             {
-                return Json("error");
+                return Json("US is already exist", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -93,11 +92,11 @@ namespace SaeedClinick.Controllers
                 })
             };
 
-            return Json( List, JsonRequestBehavior.AllowGet);
+            return Json(List, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-         public JsonResult NewLab(string NewlabTitle)
+        public JsonResult NewLab(string NewlabTitle)
         {
             if (NewlabTitle != null && db.LK_Labs.Where(ss => ss.LabTitle == NewlabTitle).Count() == 0)
             {
@@ -107,9 +106,11 @@ namespace SaeedClinick.Controllers
                 db.SaveChanges();
                 return getLookupList();
             }
-           else
+            else
             {
-                return Json("error");
+                return Json("lab is aready exist");
+
+
             }
         }
     }
