@@ -11,6 +11,7 @@ namespace SaeedClinick.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public partial class PatientData
@@ -28,6 +29,7 @@ namespace SaeedClinick.Data
         public int Age { get; set; }
         public string TelephoneNum { get; set; }
         public string Address { get; set; }
+        [DisplayName("Sex")]
         public string Marrid { get; set; }
         [Required]
         public string LMB { get; set; }

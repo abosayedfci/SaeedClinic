@@ -17,14 +17,25 @@ namespace SaeedClinick.Controllers
 
         // GET: Visits
         [Route("Index/{PatientID}")]
-        public ActionResult Index( int? PatientID)
+        public ActionResult Index(int? PatientID)
         {
-            if(PatientID !=null)
+            if (PatientID != null)
             {
                 ViewBag.Patient = db.PatientDatas.Find(PatientID);
             }
-            var visits = db.Visits.Include(v => v.PatientData).Include(s=> s.VisitUS ).Include(d=>d.VisitLabs).Include(x=>x.VisitTreatments);
-            return View(visits.ToList().Where(x=>x.PatientID==PatientID));
+            var visits = db.Visits.Include(v => v.PatientData).Include(s => s.VisitUS).Include(d => d.VisitLabs).Include(x => x.VisitTreatments);
+            foreach (var visit in visits)
+            {
+                string delimiter = "|";
+                if(visit.VisitLabs!=null && visit.LK_Labs !=null)
+                visit.LL = visit.VisitLabs.Select(s => s.LK_Labs.LabTitle).Aggregate((i, j) => i + delimiter + j);
+                if (visit.VisitTreatments != null && visit.LK_Treatments != null)
+                    visit.BP = visit.VisitTreatments.Select(s => s.LK_Treatment.TreatmentTitle).Aggregate((i, j) => i + delimiter + j);
+                if (visit.VisitUS != null && visit.LK_US != null)
+                    visit.Others = visit.VisitUS.Select(s => s.LK_US.UsTitle).Aggregate((i, j) => i + delimiter + j);
+
+            }
+            return View(visits.ToList().Where(x => x.PatientID == PatientID));
         }
 
         // GET: Visits/Details/5
@@ -35,9 +46,9 @@ namespace SaeedClinick.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Visit visit= db.Visits.Where(d=>d.Id==id).Include(s => s.VisitUS).Include(d => d.VisitLabs).Include(x => x.VisitTreatments).SingleOrDefault();
+            Visit visit = db.Visits.Where(d => d.Id == id).Include(s => s.VisitUS).Include(d => d.VisitLabs).Include(x => x.VisitTreatments).SingleOrDefault();
             List<string> Labs = new List<string>();
-            foreach( var item in visit.VisitLabs)
+            foreach (var item in visit.VisitLabs)
             {
                 LK_Labs Lab = db.LK_Labs.Find(item.LabId);
                 Labs.Add(Lab.LabTitle);
@@ -47,16 +58,16 @@ namespace SaeedClinick.Controllers
             {
                 LK_Treatment Treatment = db.LK_Treatment.Find(item.TreatmentId);
                 Treatments.Add(Treatment.TreatmentTitle);
-               
+
             }
             List<string> Uss = new List<string>();
             foreach (var item in visit.VisitUS)
             {
                 LK_US US = db.LK_US.Find(item.USId);
                 Uss.Add(US.UsTitle);
-               
+
             }
-            visit.LK_US=Uss;
+            visit.LK_US = Uss;
             visit.LK_Labs = Labs;
             visit.LK_Treatments = Treatments;
             if (visit == null)
@@ -64,7 +75,7 @@ namespace SaeedClinick.Controllers
                 return HttpNotFound();
             }
             ViewBag.Patient = visit.PatientData;
-            
+
             ViewBag.visit = visit;
             return View(visit);
         }
@@ -72,7 +83,7 @@ namespace SaeedClinick.Controllers
         [Route("VisitDetails/{id}")]
         public JsonResult VisitDetails(int? id)
         {
-           
+
             Visit visit = db.Visits.Find(id);
 
             if (visit != null)
@@ -83,45 +94,48 @@ namespace SaeedClinick.Controllers
             {
                 return null;
             }
-           
+
         }
         // GET: Visits/Create
         [Route("Create/{PatientId}")]
-        public ActionResult Create( int? PatientId)
+        public ActionResult Create(int? PatientId)
         {
             ViewBag.Patient = db.PatientDatas.Find(PatientId);
-            ViewBag.VisitNum = db.Visits.ToList().Where(x => x.PatientID == PatientId).Count()+1;
+            ViewBag.VisitNum = db.Visits.ToList().Where(x => x.PatientID == PatientId).Count() + 1;
             ViewBag.Date = new DateTime();
             return View();
         }
 
-        
+
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Route("CreateNew")]
         [HttpPost]
-        public void CreateNew( Visit visit)
+        public void CreateNew(Visit visit)
         {
 
             if (ModelState.IsValid)
             {
-                foreach(int labId in visit.Labs)
-                {
-                    VisitLab item = new VisitLab();
-                    item.LabId = labId;
-                    visit.VisitLabs.Add(item);
-                }
-                foreach (int TreatmentId in visit.Treatments)
-                {
-                    VisitTreatment item = new VisitTreatment();
-                    item.TreatmentId = TreatmentId;
-                    visit.VisitTreatments.Add(item);
-                }
-                foreach (int USId in visit.Us)
-                {
-                    VisitU item = new VisitU();
-                    item.USId = USId;
-                    visit.VisitUS.Add(item);
-                }
+                if (visit.Labs != null)
+                    foreach (int labId in visit.Labs)
+                    {
+                        VisitLab item = new VisitLab();
+                        item.LabId = labId;
+                        visit.VisitLabs.Add(item);
+                    }
+                if (visit.Treatments != null)
+                    foreach (int TreatmentId in visit.Treatments)
+                    {
+                        VisitTreatment item = new VisitTreatment();
+                        item.TreatmentId = TreatmentId;
+                        visit.VisitTreatments.Add(item);
+                    }
+                if (visit.Us != null)
+                    foreach (int USId in visit.Us)
+                    {
+                        VisitU item = new VisitU();
+                        item.USId = USId;
+                        visit.VisitUS.Add(item);
+                    }
                 db.Visits.Add(visit);
                 db.SaveChanges();
 
@@ -165,7 +179,7 @@ namespace SaeedClinick.Controllers
             {
                 db.Entry(visit).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { PatientID = visit.PatientID} );
+                return RedirectToAction("Index", new { PatientID = visit.PatientID });
             }
             ViewBag.PatientID = new SelectList(db.PatientDatas, "Id", "Name", visit.PatientID);
             return View(visit);
@@ -212,7 +226,7 @@ namespace SaeedClinick.Controllers
 
             db.Visits.Remove(visit);
             db.SaveChanges();
-            return RedirectToAction("Index" , new { PatientID = visit.PatientID });
+            return RedirectToAction("Index", new { PatientID = visit.PatientID });
         }
 
         protected override void Dispose(bool disposing)

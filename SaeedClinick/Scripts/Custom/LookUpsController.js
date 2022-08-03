@@ -101,7 +101,7 @@
             url: '/Visits/CreateNew',
             data : $scope.Visit
         }).then(function (success) {
-            alert("success")
+            window.location.href = '/Visits?PatientID='+ $scope.Visit.PatientID;
         }, function (error) {
                 alert(error.data);
         });

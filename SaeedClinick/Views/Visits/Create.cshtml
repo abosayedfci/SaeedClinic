@@ -15,37 +15,40 @@
         <form name="visit">
             <h4>Visit Data</h4>
             <hr />
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label for="example-text-input" class="col-2 col-form-label">Patient Name</label>
-                    <div class="col-10">
-                        <input class="form-control" type="text" value="@ViewBag.Patient.Name" id="PatientName" readonly>
-                        <input type="text" name="PatientID" id="PatientID" value="@ViewBag.Patient.Id" Hidden />
-                    </div>
+            <div class="col-md-2">
                 </div>
-                <div class="form-group row">
-                    <label for="example-text-input" class="col-2 col-form-label">Visit Number</label>
-                    <div class="col-10">
-                        <input class="form-control" type="text" value="@ViewBag.VisitNum" id="VisitNum" readonly>
+                <div class="col-md-5">
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">Patient Name</label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" value="@ViewBag.Patient.Name" id="PatientName" readonly>
+                            <input type="text" name="PatientID" id="PatientID" value="@ViewBag.Patient.Id" Hidden />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">Visit Number</label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" value="@ViewBag.VisitNum" id="VisitNum" readonly>
 
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="example-date-input" class="col-2 col-form-label">Date</label>
-                    <div class="col-10">
-                        <input class="form-control" type="date" ng-model="Visit.Date" id="example-date-input" readonly>
-                    </div>
-                </div>
 
-            </div>
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label for="example-date-input" class="col-2 col-form-label">Next Visit Date</label>
-                    <div class="col-10">
-                        <input class="form-control" type="date" min="Visit.Date" ng-model="Visit.NextVisitDate" id="example-date-input">
-                    </div>
+
                 </div>
-                <div class="form-group row">
+                <div class="col-md-5">
+                    <div class="form-group row">
+                        <label for="example-date-input" class="col-2 col-form-label">Date</label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" ng-model="Visit.Date" id="example-date-input" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-date-input" class="col-2 col-form-label">Next Visit Date</label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" min="Visit.Date" ng-model="Visit.NextVisitDate" id="example-date-input">
+                        </div>
+                    </div>
+                    @*<div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">BP</label>
                     <div class="col-10">
                         <input class="form-control" ng-model="Visit.BP" type="text" id="BP">
@@ -56,9 +59,9 @@
                     <div class="col-10">
                         <input class="form-control" ng-model="Visit.LL" type="text" id="LL">
                     </div>
+                </div>*@
                 </div>
-            </div>
-            <div class="col-md-4">
+                @*<div class="col-md-4">
 
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Weight</label>
@@ -78,77 +81,77 @@
                         <textarea class="form-control" ng-model="Visit.Others" type="text" id="Others" rows="3"></textarea>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
 
-            <div class="col-md-2">
-                <img class="img-responsive img-circle" src="~/Content/lab.jpg" />
-            </div>
-            <div class="col-md-10">
-                <div class="form-group row" style="background-color: #EBEBEB;">
-                    <h3>Laps</h3>
-                    <div>
-                        <dualmultiselect ng-model="Visit.Labs"
-                                         input-model="test"
-                                         recursion-check="true"
-                                         output-all-info="false"
-                                         output-duplicate="false"
-                                         options="{displayProperty: 'LabTitle', valueProperty: 'Id'}"></dualmultiselect>
+                <div class="col-md-2">
+                    <img class="img-responsive img-circle" src="~/Content/lab.jpg" />
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group row" style="background-color: #EBEBEB;">
+                        <h3>Laps</h3>
+                        <div>
+                            <dualmultiselect ng-model="Visit.Labs"
+                                             input-model="test"
+                                             recursion-check="true"
+                                             output-all-info="false"
+                                             output-duplicate="false"
+                                             options="{displayProperty: 'LabTitle', valueProperty: 'Id'}"></dualmultiselect>
+                        </div>
+                        <input ng-model="NewLab" />
+                        <button ng-click="pushToLeft(1)">
+                            Add to list
+                        </button>
                     </div>
-                    <input ng-model="NewLab" />
-                    <button ng-click="pushToLeft(1)">
-                        Add to list
-                    </button>
                 </div>
-            </div>
 
-            <div class="col-md-2">
-                <img class="img-responsive img-circle" src="~/Content/Treatment.jfif" />
-            </div>
-            <div class="col-md-10">
-                <div class="form-group row" style="background-color: #EBEBEB;">
-                    <h3>Treatments</h3>
-                    <div>
-                        <dualmultiselect ng-model="Visit.Treatments"
-                                         input-model="treatments"
-                                         recursion-check="true"
-                                         output-all-info="false"
-                                         output-duplicate="false"
-                                         options="{displayProperty: 'TreatmentTitle', valueProperty: 'Id'}"></dualmultiselect>
+                <div class="col-md-2">
+                    <img class="img-responsive img-circle" src="~/Content/Treatment.jfif" />
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group row" style="background-color: #EBEBEB;">
+                        <h3>Treatments</h3>
+                        <div>
+                            <dualmultiselect ng-model="Visit.Treatments"
+                                             input-model="treatments"
+                                             recursion-check="true"
+                                             output-all-info="false"
+                                             output-duplicate="false"
+                                             options="{displayProperty: 'TreatmentTitle', valueProperty: 'Id'}"></dualmultiselect>
+                        </div>
+                        <input ng-model="NewTreatment" />
+                        <button ng-click="pushToLeft(2)">
+                            Add to list
+                        </button>
                     </div>
-                    <input ng-model="NewTreatment" />
-                    <button ng-click="pushToLeft(2)">
-                        Add to list
-                    </button>
                 </div>
-            </div>
 
-            <div class="col-md-2">
-                <img class="img-responsive img-circle" src="~/Content/US.jpg" />
-            </div>
-            <div class="col-md-10">
-                <div class="form-group row" style="background-color: #EBEBEB;">
-                    <h3>U/S</h3>
-                    <div>
-                        <dualmultiselect ng-model="Visit.Us"
-                                         input-model="USSS"
-                                         recursion-check="true"
-                                         output-all-info="false"
-                                         output-duplicate="false"
-                                         options="{displayProperty: 'UsTitle', valueProperty: 'Id'}"></dualmultiselect>
+                <div class="col-md-2">
+                    <img class="img-responsive img-circle" src="~/Content/US.jpg" />
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group row" style="background-color: #EBEBEB;">
+                        <h3>U/S</h3>
+                        <div>
+                            <dualmultiselect ng-model="Visit.Us"
+                                             input-model="USSS"
+                                             recursion-check="true"
+                                             output-all-info="false"
+                                             output-duplicate="false"
+                                             options="{displayProperty: 'UsTitle', valueProperty: 'Id'}"></dualmultiselect>
+                        </div>
+                        <input ng-model="NewUS" />
+                        <button ng-click="pushToLeft(3)">
+                            Add to list
+                        </button>
                     </div>
-                    <input ng-model="NewUS" />
-                    <button ng-click="pushToLeft(3)">
-                        Add to list
-                    </button>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-11 col-md-10">
-                    <input type="submit" class="btn btn-primary" ng-Click="SubmitForm()" id="submit" value="Submit" />
+                <div class="form-group">
+                    <div class="col-md-offset-11 col-md-10">
+                        <input type="submit" class="btn btn-primary" ng-Click="SubmitForm()" id="submit" value="Submit" />
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
 </div>

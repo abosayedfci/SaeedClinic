@@ -11,6 +11,7 @@ namespace SaeedClinick.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,10 +29,13 @@ namespace SaeedClinick.Data
         public int VisitNum { get; set; }
         public System.DateTime Date { get; set; }
         public Nullable<System.DateTime> NextVisitDate { get; set; }
+        [DisplayName("Treatments")]
         public string BP { get; set; }
+        [DisplayName("Labs")]
         public string LL { get; set; }
         public Nullable<double> Weight { get; set; }
         public string Complain { get; set; }
+        [DisplayName("US")]
         public string Others { get; set; }
         [ForeignKey("PatientData")]
         public int PatientID { get; set; }
@@ -43,5 +47,6 @@ namespace SaeedClinick.Data
         public virtual ICollection<VisitTreatment> VisitTreatments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VisitU> VisitUS { get; set; }
+
     }
 }

@@ -21,20 +21,20 @@
             <p>Next Visit Date</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BP)
+            @Html.DisplayNameFor(model => model.Labs)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LL)
+            @Html.DisplayNameFor(model => model.Treatments)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Weight)
+            @Html.DisplayNameFor(model => model.Us)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Complain)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Others)
-        </th>
+        </th>*@
         
         <th></th>
     </tr>
@@ -51,25 +51,25 @@
             @Html.DisplayFor(modelItem => item.NextVisitDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BP)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.LL)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Complain)
+            @Html.DisplayFor(modelItem => item.BP)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Others)
         </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Complain)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Others)
+        </td>*@
       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id } , new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }
